@@ -9,7 +9,7 @@ import org.scalatest.path
 /**
   * Created by dnwiebe on 3/19/17.
   */
-object DependencyInjectionDemo {
+object CakeDependencyInjectionDemo {
 
   // Note: trait, not class
   trait Rifle {
@@ -50,8 +50,8 @@ object DependencyInjectionDemo {
   val rifle = new Rifle with RealAmmunitionInfoSource with RealWeatherInfoSource with RealBallistician
 }
 
-class DependencyInjectionDemo extends path.FunSpec {
-  import cse.cakepattern.b.cakedi.DependencyInjectionDemo._
+class CakeDependencyInjectionDemo extends path.FunSpec {
+  import cse.cakepattern.b.cakedi.CakeDependencyInjectionDemo._
 
   val ammunitionDetails = AmmunitionDetails (165.0, 0.523, 866.0)
   val weatherDetails = WeatherDetails (10.7, 20.4, Wind (293.0, 1.38))

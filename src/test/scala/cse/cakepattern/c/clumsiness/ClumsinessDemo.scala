@@ -7,26 +7,6 @@ import org.scalatest.path
   */
 
 object UpperClumsyDemo {
-  trait Airplane {
-    this: Fadec with Instruments with FlightControls =>
-
-    def method (): Unit = {
-      // can control Fadec
-      setPower (0.0)
-      // can control flight
-      setPitchPressure (0.0)
-      setRoll (0.0)
-      setYawPressure (0.0)
-      // can read instruments
-      val airspeed = indicatedAirspeed
-      val altitudeValue = altitude
-
-      // cannot control throttle or mixture or propeller
-//      setThrottle (0.0)
-//      setMixture (0.0)
-//      setIncidenceAngle (0.0)
-    }
-  }
 
   trait Fadec {
     this: Engine with Propeller with Instruments =>
@@ -67,29 +47,30 @@ object UpperClumsyDemo {
   trait Propeller {
     def setIncidenceAngle (position: Double)
   }
-}
 
-object LowerClumsyDemo {
   trait Airplane {
-    this: FadecComponent with InstrumentsComponent with FlightControlsComponent =>
+    this: Fadec with Instruments with FlightControls =>
 
     def method (): Unit = {
       // can control Fadec
-      fadec.setPower (0.0)
+      setPower (0.0)
       // can control flight
-      flightControls.setPitchPressure (0.0)
-      flightControls.setRoll (0.0)
-      flightControls.setYawPressure (0.0)
+      setPitchPressure (0.0)
+      setRoll (0.0)
+      setYawPressure (0.0)
       // can read instruments
-      val airspeed = instruments.indicatedAirspeed
-      val altitude = instruments.altitude
+      val airspeed = indicatedAirspeed
+      val altitudeValue = altitude
 
       // cannot control throttle or mixture or propeller
-//            engine.setThrottle (0.0)
-//            engine.setMixture (0.0)
-//            propeller.setIncidenceAngle (0.0)
+//      setThrottle (0.0)
+//      setMixture (0.0)
+//      setIncidenceAngle (0.0)
     }
   }
+}
+
+object LowerClumsyDemo {
 
   trait FadecComponent {
     val fadec: Fadec
@@ -150,6 +131,28 @@ object LowerClumsyDemo {
       def setIncidenceAngle (position: Double)
     }
   }
+
+  trait Airplane {
+    this: FadecComponent with InstrumentsComponent with FlightControlsComponent =>
+
+    def method (): Unit = {
+      // can control Fadec
+      fadec.setPower (0.0)
+      // can control flight
+      flightControls.setPitchPressure (0.0)
+      flightControls.setRoll (0.0)
+      flightControls.setYawPressure (0.0)
+      // can read instruments
+      val airspeed = instruments.indicatedAirspeed
+      val altitude = instruments.altitude
+
+      // cannot control throttle or mixture or propeller
+//            engine.setThrottle (0.0)
+//            engine.setMixture (0.0)
+//            propeller.setIncidenceAngle (0.0)
+    }
+  }
+
 }
 
 object MultipleClumsinessDemoNo {

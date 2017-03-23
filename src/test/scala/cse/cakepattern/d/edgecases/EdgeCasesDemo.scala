@@ -6,7 +6,8 @@ import org.scalatest.path
   * Created by dnwiebe on 3/19/17.
   */
 
-object EdgeCasesDemo {
+object MethodCollisionDemo {
+
   trait OneWay {
     def method (): String = "One Way"
   }
@@ -18,8 +19,28 @@ object EdgeCasesDemo {
   trait BothWays {
     this: OneWay with AnotherWay =>
   }
+}
 
-  /////////////////////////////////////////////
+class MethodCollisionDemo extends path.FunSpec {
+  import MethodCollisionDemo._
+
+  describe ("A container declared with two layers that implement methods with identical signatures") {
+
+    it ("does not compile without a little help") {
+//      val bothWays = new BothWays () with OneWay with AnotherWay
+//      println (bothWays.method ())
+    }
+
+    it ("is fine when told which way to go") {
+      val bothWays = new BothWays () with OneWay with AnotherWay {
+        override def method (): String = super[OneWay].method ()
+      }
+      assert (bothWays.method () === "One Way")
+    }
+  }
+}
+
+object DiamondOfDeathDemo {
 
   trait DiamondTop {
     val string: String
@@ -39,37 +60,19 @@ object EdgeCasesDemo {
   }
 }
 
-class EdgeCasesDemo extends path.FunSpec {
-  import cse.cakepattern.d.edgecases.EdgeCasesDemo._
+class DiamondOfDeathDemo extends path.FunSpec {
+  import DiamondOfDeathDemo._
 
-  describe ("Some edge cases include") {
+  describe ("A classic C++-style Diamond of Death") {
 
-    describe ("A container declared with two layers that implement methods with identical signatures") {
-
-      it ("does not compile without a little help") {
-//        val bothWays = new BothWays () with OneWay with AnotherWay
-//        println (bothWays.method ())
-      }
-
-      it ("is fine when told which way to go") {
-        val bothWays = new BothWays () with OneWay with AnotherWay {
-          override def method (): String = super[OneWay].method ()
-        }
-        assert (bothWays.method () === "One Way")
-      }
+    it ("uses the rightmost side of the diamond") {
+      val bottom = new DiamondBottom () with DiamondOneSide with DiamondAnotherSide
+      assert (bottom.method () === "Another Side")
     }
 
-    describe ("A classic C++-style Diamond of Death") {
-
-      it ("uses the rightmost side of the diamond") {
-        val bottom = new DiamondBottom () with DiamondOneSide with DiamondAnotherSide
-        assert (bottom.method () === "Another Side")
-      }
-
-      it ("still uses the rightmost side of the diamond") {
-        val bottom = new DiamondBottom () with DiamondAnotherSide with DiamondOneSide
-        assert (bottom.method () === "One Side")
-      }
+    it ("still uses the rightmost side of the diamond") {
+      val bottom = new DiamondBottom () with DiamondAnotherSide with DiamondOneSide
+      assert (bottom.method () === "One Side")
     }
   }
 }

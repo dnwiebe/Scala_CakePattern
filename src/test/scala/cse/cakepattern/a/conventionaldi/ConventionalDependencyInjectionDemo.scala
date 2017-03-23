@@ -13,7 +13,7 @@ import org.scalatest.path
   * Created by dnwiebe on 3/19/17.
   */
 
-object DependencyInjectionDemo {
+object ConventionalDependencyInjectionDemo {
 
   class Rifle (ais: AmmunitionInfoSource, wis: WeatherInfoSource, b: Ballistician) {
     def fire (a: Ammunition, l: Location, d: Direction, range: Double): Impact = {
@@ -48,8 +48,8 @@ object DependencyInjectionDemo {
   val rifle = new Rifle (new RealAmmunitionInfoSource (), new RealWeatherInfoSource (), new RealBallistician ())
 }
 
-class DependencyInjectionDemo extends path.FunSpec {
-  import cse.cakepattern.a.conventionaldi.DependencyInjectionDemo._
+class ConventionalDependencyInjectionDemo extends path.FunSpec {
+  import cse.cakepattern.a.conventionaldi.ConventionalDependencyInjectionDemo._
 
   describe ("A Rifle, given appropriate mocks") {
     val ammunitionInfoSource = mock (classOf[AmmunitionInfoSource])

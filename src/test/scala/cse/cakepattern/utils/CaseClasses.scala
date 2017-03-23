@@ -5,18 +5,11 @@ package cse.cakepattern.utils
   */
 
 object CaseClasses {
-
   case class Ammunition (brand: String, name: String, chambering: String)
-
   case class Location (latitude: Double, longitude: Double)
-
   case class Impact (right: Double, high: Double)
-
   case class Direction (azimuth: Double, elevation: Double)
-
   case class Wind (fromAzimuth: Double, speed: Double)
-
   case class AmmunitionDetails (bulletWeight: Double, ballisticCoefficient: Double, muzzleVelocity: Double)
-
   case class WeatherDetails (temperature: Double, humidity: Double, wind: Wind)
 }
