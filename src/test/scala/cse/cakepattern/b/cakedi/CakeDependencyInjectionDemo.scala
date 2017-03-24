@@ -51,7 +51,7 @@ class CakeDependencyInjectionDemo extends path.FunSpec {
   import CakeDependencyInjectionDemo._
 
   val ammunitionDetails = AmmunitionDetails (165.0, 0.523, 866.0)
-  val weatherDetails = WeatherDetails (10.7, 20.4, Wind (293.0, 1.38))
+  val weatherDetails = WeatherDetails (10.7, 29.92, 20.4, Wind (293.0, 1.38))
   val impact = Impact (-0.00294, -0.193)
 
   private var recording = Map[String, Any] ()

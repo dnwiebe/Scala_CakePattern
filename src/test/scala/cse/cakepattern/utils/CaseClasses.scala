@@ -11,5 +11,5 @@ object CaseClasses {
   case class Direction (azimuth: Double, elevation: Double)
   case class Wind (fromAzimuth: Double, speed: Double)
   case class AmmunitionDetails (bulletWeight: Double, ballisticCoefficient: Double, muzzleVelocity: Double)
-  case class WeatherDetails (temperature: Double, humidity: Double, wind: Wind)
+  case class WeatherDetails (temperature: Double, barometer: Double, humidity: Double, wind: Wind)
 }

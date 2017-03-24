@@ -62,7 +62,7 @@ class ConventionalDependencyInjectionDemo extends path.FunSpec {
       val ammunitionDetails = AmmunitionDetails (165.0, 0.523, 866.0)
       val location = Location (38.820046, -106.378879)
       val wind = Wind (293.0, 1.38)
-      val weatherDetails = WeatherDetails (10.7, 20.4, wind)
+      val weatherDetails = WeatherDetails (10.7, 29.92, 20.4, wind)
       val direction = Direction (273.0, -5.33)
       val range = 306.0
       val impact = Impact (-0.00294, -0.193)
