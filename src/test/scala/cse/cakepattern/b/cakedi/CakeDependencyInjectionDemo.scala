@@ -14,13 +14,10 @@ object CakeDependencyInjectionDemo {
   // Note: trait, not class
   trait Rifle {
     this: AmmunitionInfoSource with WeatherInfoSource with Ballistician =>
-    def fire (a: Ammunition, l: Location, d: Direction, range: Double): Impact = {
-      // Note: getDetails, not ais.getDetails
-      val ammunitionDetails = getDetails (a)
-      // Note: getDetails, not wis.getDetails
-      val weatherDetails = getDetails (l, OffsetDateTime.now ())
-      // Note: computeImpact, not b.computeImpact
-      computeImpact (ammunitionDetails, weatherDetails, d, range)
+    def fire (ammunition: Ammunition, location: Location, direction: Direction, range: Double): Impact = {
+      val ammunitionDetails = getDetails (ammunition)
+      val weatherDetails = getDetails (location, OffsetDateTime.now ())
+      computeImpact (ammunitionDetails, weatherDetails, direction, range)
     }
   }
 
@@ -51,7 +48,7 @@ object CakeDependencyInjectionDemo {
 }
 
 class CakeDependencyInjectionDemo extends path.FunSpec {
-  import cse.cakepattern.b.cakedi.CakeDependencyInjectionDemo._
+  import CakeDependencyInjectionDemo._
 
   val ammunitionDetails = AmmunitionDetails (165.0, 0.523, 866.0)
   val weatherDetails = WeatherDetails (10.7, 20.4, Wind (293.0, 1.38))

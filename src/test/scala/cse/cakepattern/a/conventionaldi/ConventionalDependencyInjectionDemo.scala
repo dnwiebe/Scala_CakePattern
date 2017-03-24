@@ -16,10 +16,10 @@ import org.scalatest.path
 object ConventionalDependencyInjectionDemo {
 
   class Rifle (ais: AmmunitionInfoSource, wis: WeatherInfoSource, b: Ballistician) {
-    def fire (a: Ammunition, l: Location, d: Direction, range: Double): Impact = {
-      val ammunitionDetails = ais.getDetails (a)
-      val weatherDetails = wis.getDetails (l, OffsetDateTime.now ())
-      b.computeImpact (ammunitionDetails, weatherDetails, d, range)
+    def fire (ammunition: Ammunition, location: Location, direction: Direction, range: Double): Impact = {
+      val ammunitionDetails = ais.getDetails (ammunition)
+      val weatherDetails = wis.getDetails (location, OffsetDateTime.now ())
+      b.computeImpact (ammunitionDetails, weatherDetails, direction, range)
     }
   }
 
@@ -49,7 +49,7 @@ object ConventionalDependencyInjectionDemo {
 }
 
 class ConventionalDependencyInjectionDemo extends path.FunSpec {
-  import cse.cakepattern.a.conventionaldi.ConventionalDependencyInjectionDemo._
+  import ConventionalDependencyInjectionDemo._
 
   describe ("A Rifle, given appropriate mocks") {
     val ammunitionInfoSource = mock (classOf[AmmunitionInfoSource])
@@ -72,7 +72,7 @@ class ConventionalDependencyInjectionDemo extends path.FunSpec {
       when (weatherInfoSource.getDetails (Matchers.eq (location), any (classOf[OffsetDateTime])))
         .thenReturn (weatherDetails)
       when (ballistician.computeImpact (ammunitionDetails, weatherDetails, direction, range))
-          .thenReturn (impact)
+        .thenReturn (impact)
 
       describe ("when fired") {
         val startTime = OffsetDateTime.now ()
