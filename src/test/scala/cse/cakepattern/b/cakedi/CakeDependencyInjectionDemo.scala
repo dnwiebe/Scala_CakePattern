@@ -22,29 +22,27 @@ object CakeDependencyInjectionDemo {
   }
 
   //////////////////////////////////////////////////////////////////////////////
-  //////////////////////////////////////////////////////////////////////////////
-  //////////////////////////////////////////////////////////////////////////////
 
   // Note: traits, not classes
-  trait RealAmmunitionInfoSource extends AmmunitionInfoSource {
+  trait SAAMIAmmunitionInfoSource extends AmmunitionInfoSource {
     def getDetails (ammunition: Ammunition): AmmunitionDetails = {
       null // not really
     }
   }
 
-  trait RealWeatherInfoSource extends WeatherInfoSource {
+  trait NWSWeatherInfoSource extends WeatherInfoSource {
     def getDetails (location: Location, time: OffsetDateTime): WeatherDetails = {
       null // not really
     }
   }
 
-  trait RealBallistician extends Ballistician {
+  trait SiacciBallistician extends Ballistician {
     def computeImpact (ad: AmmunitionDetails, sw: WeatherDetails, d: Direction, range: Double): Impact = {
       null // not really
     }
   }
 
-  val rifle = new Rifle with RealAmmunitionInfoSource with RealWeatherInfoSource with RealBallistician
+  val rifle = new Rifle with SAAMIAmmunitionInfoSource with NWSWeatherInfoSource with SiacciBallistician
 }
 
 class CakeDependencyInjectionDemo extends path.FunSpec {

@@ -24,28 +24,26 @@ object ConventionalDependencyInjectionDemo {
   }
 
   //////////////////////////////////////////////////////////////////////////////
-  //////////////////////////////////////////////////////////////////////////////
-  //////////////////////////////////////////////////////////////////////////////
 
-  class RealAmmunitionInfoSource extends AmmunitionInfoSource {
+  class SAAMIAmmunitionInfoSource extends AmmunitionInfoSource {
     def getDetails (ammunition: Ammunition): AmmunitionDetails = {
       null // not really
     }
   }
 
-  class RealWeatherInfoSource extends WeatherInfoSource {
+  class NWSWeatherInfoSource extends WeatherInfoSource {
     def getDetails (location: Location, time: OffsetDateTime): WeatherDetails = {
       null // not really
     }
   }
 
-  class RealBallistician extends Ballistician {
+  class SiacciBallistician extends Ballistician {
     def computeImpact (ad: AmmunitionDetails, sw: WeatherDetails, d: Direction, range: Double): Impact = {
       null // not really
     }
   }
 
-  val rifle = new Rifle (new RealAmmunitionInfoSource (), new RealWeatherInfoSource (), new RealBallistician ())
+  val rifle = new Rifle (new SAAMIAmmunitionInfoSource (), new NWSWeatherInfoSource (), new SiacciBallistician ())
 }
 
 class ConventionalDependencyInjectionDemo extends path.FunSpec {
