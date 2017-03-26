@@ -8,35 +8,6 @@ import org.scalatest.path
 
 object UpperClumsyDemo {
 
-  trait Fadec {
-    this: Engine with Propeller with Instruments =>
-
-    def setPower (value: Double): Unit = {
-      // Can control throttle, mixture, and propeller and sense airspeed
-      setThrottle (0.0)
-      setMixture (0.0)
-      setIncidenceAngle (0.0)
-      val airspeed = indicatedAirspeed
-    }
-  }
-
-  trait Instruments {
-    def indicatedAirspeed: Double
-    def pitchAngle: Double
-    def rollAngle: Double
-    def altitude: Double
-    def yawRate: Double
-    def inclination: Double
-    def indicatedDirection: Double
-    def verticalSpeed: Double
-  }
-
-  trait FlightControls {
-    def setPitchPressure (pitch: Double)
-    def setRoll (yokePosition: Double)
-    def setYawPressure (yaw: Double)
-  }
-
   trait Engine {
     def setThrottle (rpm: Double): Unit
     def setMixture (fuelToAirByWeight: Double): Unit
@@ -46,6 +17,36 @@ object UpperClumsyDemo {
 
   trait Propeller {
     def setIncidenceAngle (position: Double)
+  }
+
+  trait Instruments {
+    def indicatedAirspeed: Double
+    def pitchAngle: Double
+    def rollAngle: Double
+    def altitude: Double
+    def yawRate: Double
+    def inclination: Double
+    def whiskeyCompass: Double
+    def indicatedDirection: Double
+    def verticalSpeed: Double
+  }
+
+  trait Fadec {
+    this: Engine with Propeller with Instruments =>
+
+    def setPower (value: Double): Unit = {
+      // Can control throttle, mixture, and propeller and sense airspeed--with this: collisions?
+      setThrottle (0.0)
+      setMixture (0.0)
+      setIncidenceAngle (0.0)
+      val airspeed = indicatedAirspeed
+    }
+  }
+
+  trait FlightControls {
+    def setPitchPressure (pitch: Double)
+    def setRoll (yokePosition: Double)
+    def setYawPressure (yaw: Double)
   }
 
   trait Airplane {
@@ -72,47 +73,6 @@ object UpperClumsyDemo {
 
 object LowerClumsyDemo {
 
-  trait FadecComponent {
-    val fadec: Fadec
-
-    trait Fadec {
-      this: EngineComponent with PropellerComponent with InstrumentsComponent =>
-
-      def setPower (value: Double): Unit = {
-        // Can control throttle, mixture, and propeller and sense airspeed
-        engine.setThrottle (0.0)
-        engine.setMixture (0.0)
-        propeller.setIncidenceAngle (0.0)
-        val airspeed = instruments.indicatedAirspeed
-      }
-    }
-  }
-
-  trait InstrumentsComponent {
-    val instruments: Instruments
-
-    trait Instruments {
-      def indicatedAirspeed: Double
-      def pitchAngle: Double
-      def rollAngle: Double
-      def altitude: Double
-      def yawRate: Double
-      def inclination: Double
-      def indicatedDirection: Double
-      def verticalSpeed: Double
-    }
-  }
-
-  trait FlightControlsComponent {
-    val flightControls: FlightControls
-
-    trait FlightControls {
-      def setPitchPressure (pitch: Double)
-      def setRoll (yokePosition: Double)
-      def setYawPressure (yaw: Double)
-    }
-  }
-
   trait EngineComponent {
     val engine: Engine
 
@@ -132,6 +92,48 @@ object LowerClumsyDemo {
     }
   }
 
+  trait InstrumentsComponent {
+    val instruments: Instruments
+
+    trait Instruments {
+      def indicatedAirspeed: Double
+      def pitchAngle: Double
+      def rollAngle: Double
+      def altitude: Double
+      def yawRate: Double
+      def inclination: Double
+      def whiskeyCompass: Double
+      def indicatedDirection: Double
+      def verticalSpeed: Double
+    }
+  }
+
+  trait FadecComponent {
+    val fadec: Fadec
+
+    trait Fadec {
+      this: EngineComponent with PropellerComponent with InstrumentsComponent =>
+
+      def setPower (value: Double): Unit = {
+        // Can control throttle, mixture, and propeller and sense airspeed
+        engine.setThrottle (0.0)
+        engine.setMixture (0.0)
+        propeller.setIncidenceAngle (0.0)
+        val airspeed = instruments.indicatedAirspeed
+      }
+    }
+  }
+
+  trait FlightControlsComponent {
+    val flightControls: FlightControls
+
+    trait FlightControls {
+      def setPitchPressure (pitch: Double)
+      def setRoll (yokePosition: Double)
+      def setYawPressure (yaw: Double)
+    }
+  }
+
   trait Airplane {
     this: FadecComponent with InstrumentsComponent with FlightControlsComponent =>
 
@@ -147,9 +149,9 @@ object LowerClumsyDemo {
       val altitude = instruments.altitude
 
       // cannot control throttle or mixture or propeller
-//            engine.setThrottle (0.0)
-//            engine.setMixture (0.0)
-//            propeller.setIncidenceAngle (0.0)
+//      fadec.engine.setThrottle (0.0)
+//      fadec.engine.setMixture (0.0)
+//      fadec.propeller.setIncidenceAngle (0.0)
     }
   }
 

@@ -15,16 +15,6 @@ import org.scalatest.path
 
 object ConventionalDependencyInjectionDemo {
 
-  class Rifle (ais: AmmunitionInfoSource, wis: WeatherInfoSource, b: Ballistician) {
-    def fire (ammunition: Ammunition, location: Location, direction: Direction, range: Double): Impact = {
-      val ammunitionDetails = ais.getDetails (ammunition)
-      val weatherDetails = wis.getDetails (location, OffsetDateTime.now ())
-      b.computeImpact (ammunitionDetails, weatherDetails, direction, range)
-    }
-  }
-
-  //////////////////////////////////////////////////////////////////////////////
-
   class SAAMIAmmunitionInfoSource extends AmmunitionInfoSource {
     def getDetails (ammunition: Ammunition): AmmunitionDetails = {
       null // not really
@@ -40,6 +30,16 @@ object ConventionalDependencyInjectionDemo {
   class SiacciBallistician extends Ballistician {
     def computeImpact (ad: AmmunitionDetails, sw: WeatherDetails, d: Direction, range: Double): Impact = {
       null // not really
+    }
+  }
+
+  //////////////////////////////////////////////////////////////////////////////
+
+  class Rifle (ais: AmmunitionInfoSource, wis: WeatherInfoSource, b: Ballistician) {
+    def fire (ammunition: Ammunition, location: Location, direction: Direction, range: Double): Impact = {
+      val ammunitionDetails = ais.getDetails (ammunition)
+      val weatherDetails = wis.getDetails (location, OffsetDateTime.now ())
+      b.computeImpact (ammunitionDetails, weatherDetails, direction, range)
     }
   }
 

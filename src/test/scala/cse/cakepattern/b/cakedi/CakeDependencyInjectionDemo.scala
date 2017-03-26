@@ -11,18 +11,6 @@ import org.scalatest.path
   */
 object CakeDependencyInjectionDemo {
 
-  // Note: trait, not class
-  trait Rifle {
-    this: AmmunitionInfoSource with WeatherInfoSource with Ballistician =>
-    def fire (ammunition: Ammunition, location: Location, direction: Direction, range: Double): Impact = {
-      val ammunitionDetails = getDetails (ammunition)
-      val weatherDetails = getDetails (location, OffsetDateTime.now ())
-      computeImpact (ammunitionDetails, weatherDetails, direction, range)
-    }
-  }
-
-  //////////////////////////////////////////////////////////////////////////////
-
   // Note: traits, not classes
   trait SAAMIAmmunitionInfoSource extends AmmunitionInfoSource {
     def getDetails (ammunition: Ammunition): AmmunitionDetails = {
@@ -39,6 +27,21 @@ object CakeDependencyInjectionDemo {
   trait SiacciBallistician extends Ballistician {
     def computeImpact (ad: AmmunitionDetails, sw: WeatherDetails, d: Direction, range: Double): Impact = {
       null // not really
+    }
+  }
+
+  //////////////////////////////////////////////////////////////////////////////
+
+  // Note: trait, not class
+  trait Rifle {
+    // heart of the Cake Pattern, right here:
+    this: AmmunitionInfoSource with WeatherInfoSource with Ballistician =>
+
+    def fire (ammunition: Ammunition, location: Location, direction: Direction, range: Double): Impact = {
+      // Note: this
+      val ammunitionDetails = this.getDetails (ammunition)
+      val weatherDetails = getDetails (location, OffsetDateTime.now ())
+      computeImpact (ammunitionDetails, weatherDetails, direction, range)
     }
   }
 
