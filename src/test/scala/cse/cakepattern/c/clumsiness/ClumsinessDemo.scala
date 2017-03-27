@@ -160,7 +160,7 @@ object LowerClumsyDemo {
 object MultipleClumsinessDemoNo {
 
   trait Fadec {
-    this: EngineComponent with EngineComponent with EngineComponent =>
+    this: EngineComponent with EngineComponent =>
   }
 
   trait EngineComponent {
